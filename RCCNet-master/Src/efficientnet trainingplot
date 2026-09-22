@@ -1,0 +1,255 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# ============================================================
+# BANANA RIPENESS - RESULTS FROM ACTUAL CONFUSION MATRIX
+# ============================================================
+
+class_names = [
+    "Overripe",
+    "Rippen",
+    "Rotten",
+    "Unripe"
+]
+
+
+# YOUR ACTUAL CONFUSION MATRIX
+
+cm = np.array([
+    [233, 1,   1,   0],
+    [14,  672, 18,  5],
+    [10,  7,   753, 2],
+    [0,   0,   4,   196]
+])
+
+
+# ============================================================
+# TOTALS
+# ============================================================
+
+total = np.sum(cm)
+
+correct = np.trace(cm)
+
+test_accuracy = correct / total
+
+
+print("\n==============================================")
+print("BANANA RIPENESS - FINAL RESULTS")
+print("==============================================")
+
+print("\nConfusion Matrix:")
+print(cm)
+
+print("\nTotal test images:", total)
+
+print("Correct predictions:", correct)
+
+print(
+    f"Test Accuracy: {test_accuracy * 100:.2f}%"
+)
+
+
+# ============================================================
+# CLASS-WISE ACCURACY
+# ============================================================
+
+class_accuracy = []
+
+for i in range(len(class_names)):
+
+    actual_total = np.sum(cm[i])
+
+    correct_class = cm[i, i]
+
+    accuracy = correct_class / actual_total
+
+    class_accuracy.append(accuracy)
+
+    print(
+        f"{class_names[i]} Accuracy: "
+        f"{accuracy * 100:.2f}%"
+    )
+
+
+# ============================================================
+# GRAPH 1
+# CLASS-WISE ACCURACY
+# ============================================================
+
+plt.figure(figsize=(9, 6))
+
+plt.bar(
+    class_names,
+    np.array(class_accuracy) * 100
+)
+
+plt.axhline(
+    test_accuracy * 100,
+    linestyle="--",
+    label=f"Overall Test Accuracy = {test_accuracy * 100:.2f}%"
+)
+
+plt.title(
+    "Banana Ripeness - Test Accuracy by Class"
+)
+
+plt.xlabel(
+    "Banana Ripeness Class"
+)
+
+plt.ylabel(
+    "Accuracy (%)"
+)
+
+plt.ylim(
+    0,
+    105
+)
+
+plt.legend()
+
+plt.tight_layout()
+
+plt.savefig(
+    "Banana_Actual_Test_Accuracy.png",
+    dpi=300
+)
+
+plt.show()
+
+
+# ============================================================
+# GRAPH 2
+# OVERALL TEST ACCURACY
+# ============================================================
+
+plt.figure(figsize=(7, 6))
+
+plt.bar(
+    ["Test Accuracy"],
+    [test_accuracy * 100]
+)
+
+plt.title(
+    "Banana Ripeness - Final Test Accuracy"
+)
+
+plt.ylabel(
+    "Accuracy (%)"
+)
+
+plt.ylim(
+    0,
+    105
+)
+
+plt.text(
+    0,
+    test_accuracy * 100 + 1,
+    f"{test_accuracy * 100:.2f}%",
+    ha="center",
+    fontsize=14
+)
+
+plt.tight_layout()
+
+plt.savefig(
+    "Banana_Final_Test_Accuracy_97_27.png",
+    dpi=300
+)
+
+plt.show()
+
+
+# ============================================================
+# GRAPH 3
+# CONFUSION MATRIX
+# ============================================================
+
+plt.figure(figsize=(8, 7))
+
+plt.imshow(cm)
+
+plt.title(
+    "Banana Ripeness Confusion Matrix"
+)
+
+plt.xlabel(
+    "Predicted Class"
+)
+
+plt.ylabel(
+    "Actual Class"
+)
+
+plt.xticks(
+    range(4),
+    class_names,
+    rotation=45
+)
+
+plt.yticks(
+    range(4),
+    class_names
+)
+
+
+for i in range(4):
+
+    for j in range(4):
+
+        plt.text(
+            j,
+            i,
+            cm[i, j],
+            ha="center",
+            va="center"
+        )
+
+
+plt.tight_layout()
+
+plt.savefig(
+    "Banana_Confusion_Matrix_Final.png",
+    dpi=300
+)
+
+plt.show()
+
+
+# ============================================================
+# FINAL INFORMATION
+# ============================================================
+
+print("\n==============================================")
+print("IMPORTANT")
+print("==============================================")
+
+print(
+    "\nThe confusion matrix gives a REAL test accuracy of:"
+)
+
+print(
+    f"{test_accuracy * 100:.2f}%"
+)
+
+print(
+    "\nTraining/validation accuracy curves cannot be"
+    " reconstructed from a confusion matrix."
+)
+
+print(
+    "\nTraining/validation/test loss cannot be"
+    " reconstructed from a confusion matrix."
+)
+
+print(
+    "\nWe need the original training history or"
+    " prediction probabilities for the loss."
+)
+
+print("\n==============================================")
+print("DONE")
+print("==============================================")

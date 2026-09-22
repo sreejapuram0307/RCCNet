@@ -1,0 +1,12 @@
+Banana Ripeness - GoogleNet Results
+====================================
+
+Test Loss: 0.009294
+Test Accuracy: 99.62%
+Confusion Matrix Accuracy: 99.62%
+
+Confusion Matrix:
+[[ 350    1    2    0]
+ [   5 1052    5    0]
+ [   7    5 1144    3]
+ [   0    0    1 5051]]
